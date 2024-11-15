@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'widget.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.2
+** Created by: Qt User Interface Compiler version 5.12.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -190,16 +190,16 @@ public:
 
     void retranslateUi(QWidget *Widget)
     {
-        Widget->setWindowTitle(QCoreApplication::translate("Widget", "Widget", nullptr));
-        currentLyric->setText(QCoreApplication::translate("Widget", "\347\224\237\346\227\245\345\277\253\344\271\220", nullptr));
+        Widget->setWindowTitle(QApplication::translate("Widget", "Widget", nullptr));
+        currentLyric->setText(QApplication::translate("Widget", "\347\224\237\346\227\245\345\277\253\344\271\220", nullptr));
         prevBtn->setText(QString());
         playerBtn->setText(QString());
         nextBtn->setText(QString());
         modeBtn->setText(QString());
         albumPic->setText(QString());
-        songName->setText(QCoreApplication::translate("Widget", "\346\210\221\346\200\200\345\277\265\347\232\204 - \345\255\231\347\207\225\345\247\277", nullptr));
-        currentTime->setText(QCoreApplication::translate("Widget", "03:51/", nullptr));
-        totalTime->setText(QCoreApplication::translate("Widget", "04:50", nullptr));
+        songName->setText(QApplication::translate("Widget", "\346\210\221\346\200\200\345\277\265\347\232\204 - \345\255\231\347\207\225\345\247\277", nullptr));
+        currentTime->setText(QApplication::translate("Widget", "03:51/", nullptr));
+        totalTime->setText(QApplication::translate("Widget", "04:50", nullptr));
         soundBtn->setText(QString());
     } // retranslateUi
 

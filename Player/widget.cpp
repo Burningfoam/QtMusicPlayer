@@ -238,6 +238,7 @@ void Widget::handlePlaySlot()
 
         // 定时器停止
         m_timer->stop();
+        ui->PostWidget->stop();
     }
     else
     {
@@ -249,6 +250,7 @@ void Widget::handlePlaySlot()
         m_player->play();
 
         m_timer->start();
+        ui->PostWidget->start();
     }
 }
 
@@ -284,7 +286,13 @@ void Widget::playAppointMusic(const QString& filepath)
     // 专辑照片
     QString albumPath = m_musicPath + musicName + ".jpg";
     QPixmap albumPix(albumPath);
+    if(albumPix.isNull())
+    {
+        albumPath = m_musicPath + musicName + ".png";
+        albumPix = QPixmap(albumPath);
+    }
     ui->albumPic->setPixmap(albumPix.scaled(ui->albumPic->width(),ui->albumPic->height()));
+    ui->PostWidget->SetPixmap(albumPix);
     // 歌曲
     QString absoluteName = m_musicPath + musicName + ".mp3";
     m_player->setMedia(QUrl::fromLocalFile(absoluteName));

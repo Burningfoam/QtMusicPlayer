@@ -10,12 +10,15 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
+    rotatewidget.cpp \
     widget.cpp
 
 HEADERS += \
+    rotatewidget.h \
     widget.h
 
 FORMS += \
+    rotatewidget.ui \
     widget.ui
 
 # Default rules for deployment.
