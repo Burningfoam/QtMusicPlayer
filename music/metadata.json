@@ -1,0 +1,301 @@
+{
+    "songs": [
+        {
+            "album": "album_test",
+            "artist": "artist_test",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/artist_test/album_test/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/artist_test/album_test/发如雪.mp3",
+            "id": "462729834",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/artist_test/album_test/发如雪.lrc",
+            "title": "发如雪"
+        },
+        {
+            "album": "album_test",
+            "artist": "artist_test",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/artist_test/album_test/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/artist_test/album_test/我落泪情绪零碎.mp3",
+            "id": "1520512428",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/artist_test/album_test/我落泪情绪零碎.lrc",
+            "title": "我落泪情绪零碎"
+        },
+        {
+            "album": "11月的萧邦",
+            "artist": "周杰伦",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/发如雪.mp3",
+            "id": "2897961711",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/发如雪.lrc",
+            "title": "发如雪"
+        },
+        {
+            "album": "11月的萧邦",
+            "artist": "周杰伦",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/夜曲.mp3",
+            "id": "4198336932",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/夜曲.lrc",
+            "title": "夜曲"
+        },
+        {
+            "album": "11月的萧邦",
+            "artist": "周杰伦",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/枫.mp3",
+            "id": "3902090593",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/枫.lrc",
+            "title": "枫"
+        },
+        {
+            "album": "七里香",
+            "artist": "周杰伦",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/七里香/cover.png",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/七里香/七里香.mp3",
+            "id": "556336075",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/七里香/七里香.lrc",
+            "title": "七里香"
+        },
+        {
+            "album": "七里香",
+            "artist": "周杰伦",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/七里香/cover.png",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/七里香/园游会.mp3",
+            "id": "3716237642",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/七里香/园游会.lrc",
+            "title": "园游会"
+        },
+        {
+            "album": "七里香",
+            "artist": "周杰伦",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/七里香/cover.png",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/七里香/止战之殇.mp3",
+            "id": "65380603",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/七里香/止战之殇.lrc",
+            "title": "止战之殇"
+        },
+        {
+            "album": "魔杰座",
+            "artist": "周杰伦",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/兰亭序.mp3",
+            "id": "4121442600",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/兰亭序.lrc",
+            "title": "兰亭序"
+        },
+        {
+            "album": "魔杰座",
+            "artist": "周杰伦",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/稻香.mp3",
+            "id": "1875237388",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/稻香.lrc",
+            "title": "稻香"
+        },
+        {
+            "album": "魔杰座",
+            "artist": "周杰伦",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/花海.mp3",
+            "id": "1912430644",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/花海.lrc",
+            "title": "花海"
+        },
+        {
+            "album": "逆光",
+            "artist": "孙燕姿",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/孙燕姿/逆光/cover.png",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/孙燕姿/逆光/安宁.mp3",
+            "id": "149072867",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/孙燕姿/逆光/安宁.lrc",
+            "title": "安宁"
+        },
+        {
+            "album": "逆光",
+            "artist": "孙燕姿",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/孙燕姿/逆光/cover.png",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/孙燕姿/逆光/我怀念的.mp3",
+            "id": "2561447689",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/孙燕姿/逆光/我怀念的.lrc",
+            "title": "我怀念的"
+        },
+        {
+            "album": "逆光",
+            "artist": "孙燕姿",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/孙燕姿/逆光/cover.png",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/孙燕姿/逆光/逆光.mp3",
+            "id": "170954574",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/孙燕姿/逆光/逆光.lrc",
+            "title": "逆光"
+        },
+        {
+            "album": "小王",
+            "artist": "毛不易",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/小王/cover.png",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/小王/一程山路.mp3",
+            "id": "3888897945",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/小王/一程山路.lrc",
+            "title": "一程山路"
+        },
+        {
+            "album": "小王",
+            "artist": "毛不易",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/小王/cover.png",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/小王/东北民谣.mp3",
+            "id": "1016537245",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/小王/东北民谣.lrc",
+            "title": "东北民谣"
+        },
+        {
+            "album": "平凡的一天",
+            "artist": "毛不易",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/平凡的一天/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/平凡的一天/像我这样的人.mp3",
+            "id": "3038060749",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/平凡的一天/像我这样的人.lrc",
+            "title": "像我这样的人"
+        },
+        {
+            "album": "平凡的一天",
+            "artist": "毛不易",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/平凡的一天/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/平凡的一天/给你给我.mp3",
+            "id": "972864246",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/平凡的一天/给你给我.lrc",
+            "title": "给你给我"
+        },
+        {
+            "album": "年轮",
+            "artist": "汪苏泷",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/汪苏泷/年轮/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/汪苏泷/年轮/年轮.mp3",
+            "id": "1032217405",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/汪苏泷/年轮/年轮.lrc",
+            "title": "年轮"
+        },
+        {
+            "album": "自定义",
+            "artist": "许嵩",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/内线.mp3",
+            "id": "3069318873",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/内线.lrc",
+            "title": "内线"
+        },
+        {
+            "album": "自定义",
+            "artist": "许嵩",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/城府.mp3",
+            "id": "2881109901",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/城府.lrc",
+            "title": "城府"
+        },
+        {
+            "album": "自定义",
+            "artist": "许嵩",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/多余的解释.mp3",
+            "id": "2085495505",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/多余的解释.lrc",
+            "title": "多余的解释"
+        },
+        {
+            "album": "自定义",
+            "artist": "许嵩",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/如果当时.mp3",
+            "id": "2616718620",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/如果当时.lrc",
+            "title": "如果当时"
+        },
+        {
+            "album": "自定义",
+            "artist": "许嵩",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/星座书上.mp3",
+            "id": "3655955339",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/星座书上.lrc",
+            "title": "星座书上"
+        },
+        {
+            "album": "自定义",
+            "artist": "许嵩",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/有何不可.mp3",
+            "id": "431352237",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/有何不可.lrc",
+            "title": "有何不可"
+        },
+        {
+            "album": "自定义",
+            "artist": "许嵩",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/清明雨上.mp3",
+            "id": "2775921610",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/清明雨上.lrc",
+            "title": "清明雨上"
+        },
+        {
+            "album": "自定义",
+            "artist": "许嵩",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/认错.mp3",
+            "id": "535146868",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/认错.lrc",
+            "title": "认错"
+        },
+        {
+            "album": "I'm OK",
+            "artist": "陶喆",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/I'm OK/cover.png",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/I'm OK/天天.mp3",
+            "id": "76126716",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/I'm OK/天天.lrc",
+            "title": "天天"
+        },
+        {
+            "album": "I'm OK",
+            "artist": "陶喆",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/I'm OK/cover.png",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/I'm OK/小镇姑娘.mp3",
+            "id": "754904667",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/I'm OK/小镇姑娘.lrc",
+            "title": "小镇姑娘"
+        },
+        {
+            "album": "I'm OK",
+            "artist": "陶喆",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/I'm OK/cover.png",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/I'm OK/找自己.mp3",
+            "id": "3918127149",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/I'm OK/找自己.lrc",
+            "title": "找自己"
+        },
+        {
+            "album": "I'm OK",
+            "artist": "陶喆",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/I'm OK/cover.png",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/I'm OK/普通朋友.mp3",
+            "id": "4074613480",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/I'm OK/普通朋友.lrc",
+            "title": "普通朋友"
+        },
+        {
+            "album": "再见你好吗",
+            "artist": "陶喆",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/再见你好吗/cover.png",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/再见你好吗/一念之间.mp3",
+            "id": "2480320881",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/再见你好吗/一念之间.lrc",
+            "title": "一念之间"
+        },
+        {
+            "album": "再见你好吗",
+            "artist": "陶喆",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/再见你好吗/cover.png",
+            "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/再见你好吗/那个女孩.mp3",
+            "id": "1507730608",
+            "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/陶喆/再见你好吗/那个女孩.lrc",
+            "title": "那个女孩"
+        }
+    ]
+}

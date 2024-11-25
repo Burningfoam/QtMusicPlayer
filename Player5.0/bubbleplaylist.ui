@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>bubblePlayList</class>
+ <widget class="QWidget" name="bubblePlayList">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>380</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QListWidget" name="listWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>380</width>
+     <height>500</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">/* 设置 QListWidget 的整体外观，圆角和背景颜色 */
+QListWidget {
+    border: 1px solid #ccc;
+    border-radius: 10px; /* 圆角 */
+    background-color: #f9f9f9; /* 背景色 */
+    padding: 5px;
+	outline:0px;
+}
+
+/* 设置 QListWidget 中每个选项的默认外观 */
+QListWidget::item {
+    border: 1px solid transparent;
+    border-radius: 5px; /* 圆角 */
+    background-color: #ffffff; /* 默认选项背景色 */
+    padding: 8px;
+    margin: 3px; /* 每个选项的间距 */
+    color: #333; /* 字体颜色 */
+    font-size: 14px;
+}
+
+/* 鼠标悬停时的效果 */
+QListWidget::item:hover {
+    background-color: #ffe6e8; /* 悬停背景色 */
+    /*border: 1px solid #91d5ff; /* 悬停时的边框颜色 */
+}
+
+/* 选中状态的效果 */
+QListWidget::item:selected {
+    background-color: #FC3D49; /* 选中背景色 */
+    /*border: 1px solid #69c0ff; /* 选中边框颜色 */
+    color: #ffffff; /* 选中文字颜色 */
+}
+
+
+/* 自定义滑动条的样式 */
+QScrollBar:vertical {
+    border: none; /* 移除边框 */
+    background: #f0f0f0; /* 滑动条背景色 */
+    width: 8px; /* 设置滑动条宽度 */
+    margin: 0px 0px 0px 0px; /* 滑动条上下的边距 */
+    border-radius: 4px; /* 圆角效果 */
+}
+
+QScrollBar::handle:vertical {
+    background: #bfbfbf; /* 滑块颜色 */
+    border-radius: 4px; /* 圆角效果 */
+    min-height: 20px; /* 滑块的最小高度 */
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #a6a6a6; /* 悬停时滑块的颜色 */
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    background: none; /* 隐藏滑动条上下的按钮 */
+    height: 0px; /* 移除按钮高度 */
+    width: 0px;
+}
+
+/* 防止滑块超出范围 */
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
