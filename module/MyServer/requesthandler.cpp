@@ -11,7 +11,7 @@ void DownloadMusicHandler::handleRequest(const QJsonObject &request,QTcpSocket &
     if (!file.open(QIODevice::ReadOnly))
     {
         qDebug()<<songMap[musicId].filePath;
-        qDebug() << "无法打开文件！";
+        qDebug() << "无法打开音乐文件！";
         return;
     }
 
@@ -36,7 +36,7 @@ void DownloadCoverHandler::handleRequest(const QJsonObject &request, QTcpSocket 
     if (!file.open(QIODevice::ReadOnly))
     {
         qDebug()<<songMap[musicId].coverPath;
-        qDebug() << "无法打开文件！";
+        qDebug() << "无法打开封面文件！";
         return;
     }
 
@@ -61,7 +61,7 @@ void DownloadLyricHandler::handleRequest(const QJsonObject &request,QTcpSocket &
     if (!file.open(QIODevice::ReadOnly))
     {
         qDebug()<<songMap[musicId].lyricsPath;
-        qDebug() << "无法打开文件！";
+        qDebug() << "无法打开歌词文件！";
         return;
     }
 
@@ -89,7 +89,7 @@ void GetMusicListHandler::handleRequest(const QJsonObject &request,QTcpSocket &s
     if (!file.open(QIODevice::ReadOnly))
     {
         qDebug()<<Location + ListName;
-        qDebug() << "无法打开文件！";
+        qDebug() << "无法打开歌单文件！";
         return;
     }
 

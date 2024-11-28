@@ -63,7 +63,8 @@ void MyServer::generateMetadataJson(const QString &musicDirectory, const QString
 
             // 查找封面文件
             QString coverFile;
-            foreach (const QString &file, albumPath.entryList({"*.jpg", "*.png"}, QDir::Files))
+//            foreach (const QString &file, albumPath.entryList({"*.jpg", "*.png"}, QDir::Files))
+            foreach (const QString &file, albumPath.entryList({"*.png"}, QDir::Files))
             {
                 if (file.startsWith("cover"))
                 {

@@ -11,33 +11,71 @@
 #include <QSlider>
 #include <QPixmap>
 #include <QFile>
+#include <QTcpSocket>
 #include "loginsignup.h"
-#include "bubbleplaylist.h"
+#include "datahandler.h"
 #define BUFFER_SIZE 128
 
 struct WidgetPrivate
 {
     QImage image; // 背景图
 //    loginSignUp loginWidget; // 用户登录组件
-    bubblePlayList bubbleWidget;// 播放列表气泡
+
+    QMediaPlayer* m_player; // 媒体播放器
+    // 播放模式
+    int m_playMode;
+//    // 播放的状态
+//    bool m_playingState;
+
+
+    // 定时器
+    QTimer* m_timer;
+
+    // 歌词信息 <key:value> : <时间:歌词>
+    QMap<int, QString> m_lyricInfo;
+    QMap<int, QString>::iterator lastIter;
+
+    QTcpSocket socket;
+    QByteArray buffer; // 人造缓冲区
+    QByteArray dataType; // 数据类型
+    size_t expectedSize; // 存储期望的数据包大小
+
+//    QListWidgetItem *CurrentItem;
+
+    QMap<QString, SongInfo> map_playList;
+
 };
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget),
     p(new WidgetPrivate),
-    m_player(new QMediaPlayer),
-    m_playingState(false),
-    m_playMode(ORDER_PLAY),
-    m_timer(new QTimer(this))
+    bubble(new bubblePlayList(this))
+//    m_playingState(false)
 {
     ui->setupUi(this);
 
+    p->socket.connectToHost("192.168.5.12",8080);
+    connect(&p->socket,&QTcpSocket::connected,[]()
+    {
+        qDebug()<<"连接服务器成功!"<<endl;
+    });
     // 设置背景图
     p->image = QImage(this->width(),this->height(),QImage::Format_RGB32);
     p->image.load(":/img/background_main.png");
     setFixedSize(1500,1068);
     setWindowTitle("网易云音乐");
+    p->m_player = new QMediaPlayer;
+    p->m_timer = new QTimer(this);
+    p->m_playMode = ORDER_PLAY;
+    p->expectedSize = 0;
+    tempPath = "D:\\File\\Documents\\QtProjects\\MusicPlayer\\ClientTemp\\";
+    map_hotList.clear();
+    p->map_playList.clear();
+    IsRequestMusicReceived = true;
+    IsRequestLyricReceived = true;
+    IsRequestCoverReceived = true;
+
 
     // 初始化按钮图标
     initButtonIcon();
@@ -46,30 +84,34 @@ Widget::Widget(QWidget *parent) :
     loginBarConnect();
     playerBarConnect();
     mediaConnect();
+    downloadSuccessConnect();
+    serverReceiveConnect();
+    musicListConnect();
 
     /*设置音量条的范围:*/
     ui->soundBar->setRange(0,100);
 
     // 清理歌词脏数据
-    m_lyricInfo.clear();
-    lastIter = m_lyricInfo.end();
+    p->m_lyricInfo.clear();
+    p->lastIter = p->m_lyricInfo.end();
 
 
     // 双击切换歌曲
     connect(ui->musicList,&QListWidget::itemDoubleClicked,this,&Widget::handleDoubleClickList);
 
     // 定时器
-    m_timer->setInterval(300);
-    connect(m_timer, &QTimer::timeout, this, &Widget::handleTimeoutSlot);
+    p->m_timer->setInterval(300);
+    connect(p->m_timer, &QTimer::timeout, this, &Widget::handleTimeoutSlot);
 
 
     // 设置多媒体路径
     m_musicPath = "D:\\File\\Documents\\QtProjects\\MusicPlayer\\music\\artists\\artist_test\\album_test\\";
     loadAppointMusicDir(m_musicPath);
+    loadLocalPlayList();
 
     // 打开时播放列表第一首歌
-    ui->musicList->setCurrentRow(0);
-    playAppointMusic();
+    bubble->setCurrentRow(0);
+    playAppointMusic(bubble->currentItem());
     handlePlaySlot();
 }
 
@@ -114,20 +156,102 @@ void Widget::playerBarConnect()
     connect(ui->modeBtn, &QPushButton::clicked, this, &Widget::handleModeSlot);
     connect(ui->toolButton_playlist, &QToolButton::clicked,[this]()
     {
-        p->bubbleWidget.showBubble(ui->toolButton_playlist);
+        bubble->showBubble(ui->toolButton_playlist);
     });
 }
 
 void Widget::mediaConnect()
 {
     // 多媒体相关
-    connect(m_player, &QMediaPlayer::durationChanged, this, &Widget::handleDurationSlot);
-    connect(m_player, &QMediaPlayer::positionChanged, this, &Widget::handlePositionSlot);// 信号传入position形参，并触发槽函数
+    connect(p->m_player, &QMediaPlayer::durationChanged, this, &Widget::handleDurationSlot);
+    connect(p->m_player, &QMediaPlayer::positionChanged, this, &Widget::handlePositionSlot);// 信号传入position形参，并触发槽函数
     // 进度条
-    connect(ui->processBar, &QSlider::sliderMoved, m_player, &QMediaPlayer::setPosition);
-    connect(ui->soundBar, &QSlider::sliderMoved, m_player, &QMediaPlayer::setVolume);
+    connect(ui->processBar, &QSlider::sliderMoved, p->m_player, &QMediaPlayer::setPosition);
+    connect(ui->soundBar, &QSlider::sliderMoved, p->m_player, &QMediaPlayer::setVolume);
     // 播放完毕
-    connect(m_player, &QMediaPlayer::mediaStatusChanged, this, &Widget::handlePlayFinish);
+    connect(p->m_player, &QMediaPlayer::mediaStatusChanged, this, &Widget::handlePlayFinish);
+}
+
+void Widget::musicListConnect()
+{
+    // 双击切换歌曲
+    connect(ui->musicList,&QListWidget::itemDoubleClicked,this,&Widget::handleDoubleClickList);
+    connect(this,&Widget::playListDoubleClicked,[this](QListWidgetItem *item)
+    {
+//        qDebug()<<"音乐列表连接："<<item->data(Qt::UserRole).toString();
+//        p->CurrentItem = item;
+        playAppointMusic(bubble->currentItem());
+    });
+}
+
+void Widget::downloadSuccessConnect()
+{
+    connect(this, &Widget::downloadSuccess_music, [this]()
+    {
+        // 下载成功后的操作
+        qDebug()<<"下载成功,开始播放！";
+        playAppointMusic(bubble->currentItem());
+    });
+    connect(this, &Widget::downloadSuccess_lyric, [this]()
+    {
+        // 下载成功后的操作
+        QString lyricPath = tempPath + "music\\" + requestedLyricId + ".lrc";
+        qDebug()<<"下载成功,加载歌词！";
+        // 加载歌词
+        loadAppointLyric(lyricPath);
+    });
+    connect(this, &Widget::downloadSuccess_cover, [this]()
+    {
+        qDebug()<<"下载成功,加载封面！";
+        QString albumPath = tempPath + "music\\" + requestedCoverId + ".png";
+        QPixmap albumPix(albumPath);
+        ui->albumPic->setPixmap(albumPix.scaled(ui->albumPic->width(),ui->albumPic->height()));
+        ui->PostWidget->SetPixmap(albumPix);
+    });
+}
+
+void Widget::serverReceiveConnect()
+{
+    connect(&p->socket, &QTcpSocket::readyRead, [this]()
+    {
+        auto Content = p->socket.readAll();  // 读取套接字缓冲区的数据
+        p->buffer.append(Content);           // 追加到自定义缓冲区
+
+        // 解析缓冲区的数据包
+        while (p->buffer.size() > sizeof(size_t) + 5)
+        {
+            if (p->expectedSize == 0)
+            {
+                // 提取包头，获取数据包大小
+                memcpy(&p->expectedSize, p->buffer.data(), sizeof(size_t));
+            }
+
+            // 如果缓冲区中的数据不足以构成完整包，退出循环
+            if (p->buffer.size() < p->expectedSize + sizeof(size_t) + 5) {
+                break;
+            }
+
+            // 提取包头（数据类型）
+            auto type = p->buffer.mid(sizeof(size_t), 5); // 类型长度为5字节（例如："audio" 或 "json "）
+            // 提取完整数据包内容
+            auto data = p->buffer.mid(sizeof(size_t) + 5, p->expectedSize);
+            qDebug()<<"数据下载成功，类型："<<type;
+            // 使用工厂方法创建对应的处理策略
+            auto handler = DataHandlerFactory::createHandler(type);
+            if (handler)
+            {
+                handler->handleData(data,this);  // 执行数据处理
+                delete handler;
+            }
+
+            // 移除已处理的数据包
+            p->buffer.remove(0, p->expectedSize + sizeof(size_t) + 5);
+
+            // 重置期望大小
+            p->expectedSize = 0;
+            p->dataType.clear();
+        }
+    });
 }
 
 void Widget::handleTimeoutSlot()
@@ -137,35 +261,36 @@ void Widget::handleTimeoutSlot()
 
 void Widget::handleDoubleClickList()
 {
-    playAppointMusic();
+//    playAppointMusic(p->CurrentItem);
 }
 
 void Widget::handlePlayFinish(QMediaPlayer::MediaStatus status)
 {
     if (status == QMediaPlayer::EndOfMedia)
     {
-        int currentRow = ui->musicList->currentRow();
+        int currentRow = bubble->currentRow();
         int nextRow = 0;
 
-        if(m_playMode == ORDER_PLAY)
+        if(p->m_playMode == ORDER_PLAY)
         {
-            nextRow = (currentRow + 1) % ui->musicList->count();
+            nextRow = (currentRow + 1) % bubble->count();
         }
-        else if(m_playMode == RANDOM_PLAY)
+        else if(p->m_playMode == RANDOM_PLAY)
         {
             do
             {
-                nextRow = qrand() % ui->musicList->count();
+                nextRow = qrand() % bubble->count();
             } while(currentRow == nextRow);
         }
-        else if(m_playMode == CIRCLE_PLAY)
+        else if(p->m_playMode == CIRCLE_PLAY)
         {
             nextRow = currentRow;
         }
-        ui->musicList->setCurrentRow(nextRow);
-        playAppointMusic();
+        bubble->setCurrentRow(nextRow);
+        playAppointMusic(bubble->currentItem());
     }
 }
+
 
 QString Widget::formatMilliseconds(int milliseconds)
 {
@@ -197,13 +322,15 @@ int Widget::parseTime(const QString& time)
 
 void Widget::RefreshLyric()
 {
-    int currentPos = m_player->position();
+    if(p->m_lyricInfo.isEmpty())
+            return;
+    int currentPos = p->m_player->position();
 
-    QMap<int, QString>::iterator currentIter = m_lyricInfo.lowerBound(currentPos); // 获取第一个大于等于 currentPos 的位置
-    if(currentPos != currentIter.key() && currentIter != m_lyricInfo.begin())
+    QMap<int, QString>::iterator currentIter = p->m_lyricInfo.lowerBound(currentPos); // 获取第一个大于等于 currentPos 的位置
+    if(currentPos != currentIter.key() && currentIter != p->m_lyricInfo.begin())
     {
         currentIter--;
-        if(currentIter == lastIter)
+        if(currentIter == p->lastIter)
             return;
     }
 
@@ -213,7 +340,7 @@ void Widget::RefreshLyric()
     QMap<int, QString>::iterator prevIter = currentIter;
     for (int i = 0; i < 2; ++i)
     {
-        if (prevIter != m_lyricInfo.begin())
+        if (prevIter != p->m_lyricInfo.begin())
         {
             --prevIter;  // 向前移动迭代器
             lyrics.prepend(prevIter.value());
@@ -233,7 +360,7 @@ void Widget::RefreshLyric()
     for (int i = 0; i < 4; ++i)
     {
         ++nextIter;  // 向后移动迭代器
-        if (nextIter != m_lyricInfo.end())
+        if (nextIter != p->m_lyricInfo.end())
         {
             lyrics.append(nextIter.value());
         }
@@ -259,22 +386,36 @@ void Widget::RefreshLyric()
     ui->lyricLabel_6->setText(lyrics[5]);
     ui->lyricLabel_7->setText(lyrics[6]);
 
-    lastIter = currentIter;
+    p->lastIter = currentIter;
 }
 
+void Widget::sendJsonToServer(const QJsonObject &jsonObj)
+{
+    // 将 JSON 对象转换为 JSON 文档
+    QJsonDocument jsonDocument(jsonObj);
+    QByteArray json = jsonDocument.toJson();
 
+    size_t fileSize = json.size(); // 获取文件大小
+    auto Type = QString("json ").toUtf8();
+
+    // 发送包头（文件大小）
+    p->socket.write((const char*)&fileSize, sizeof(size_t));
+    p->socket.write(Type);
+    // 发送文件内容
+    p->socket.write(json);
+}
 
 // 加载歌词
 void Widget::loadAppointLyric(const QString& filepath)
 {
     // 清除上一首歌词
-    m_lyricInfo.clear();
+    p->m_lyricInfo.clear();
 
     QFile file(filepath);
 
     if(file.open(QIODevice::ReadOnly) == false)
     {
-        QMessageBox::warning(this, "歌词文件", "文件不存在");
+//        QMessageBox::warning(this, "歌词文件", "文件不存在");
         return;
     }
     char buffer[BUFFER_SIZE] = {0};
@@ -290,7 +431,7 @@ void Widget::loadAppointLyric(const QString& filepath)
         QString lyric = listInfo[1].split("\n")[0];
 
         // 插入哈希表
-        m_lyricInfo[time] = lyric;
+        p->m_lyricInfo[time] = lyric;
 
         memset(buffer,0,sizeof(buffer));
     }
@@ -341,35 +482,35 @@ void Widget::initButtonIcon()
 
 void Widget::handlePrevSlot()
 {
-    int currentRow = ui->musicList->currentRow();
+    int currentRow = bubble->currentRow();
     int prevRow = 0;
 
-    if(m_playMode == ORDER_PLAY || m_playMode == CIRCLE_PLAY)
+    if(p->m_playMode == ORDER_PLAY || p->m_playMode == CIRCLE_PLAY)
     {
-        prevRow = (currentRow - 1 + ui->musicList->count()) % ui->musicList->count();
+        prevRow = (currentRow - 1 + bubble->count()) % bubble->count();
     }
-    else if(m_playMode == RANDOM_PLAY)
+    else if(p->m_playMode == RANDOM_PLAY)
     {
         do
         {
-            prevRow = qrand() % ui->musicList->count();
+            prevRow = qrand() % bubble->count();
         } while(currentRow == prevRow);
     }
-    ui->musicList->setCurrentRow(prevRow);
-    playAppointMusic();
+    bubble->setCurrentRow(prevRow);
+    playAppointMusic(bubble->currentItem());
 }
 
 void Widget::handlePlaySlot()
 {
-    if(m_player->state() == QMediaPlayer::PlayingState)
+    if(p->m_player->state() == QMediaPlayer::PlayingState)
     {
         QIcon playerIcon(":/img/play.png");
         ui->playerBtn->setIcon(playerIcon);
 
-        m_player->pause();
+        p->m_player->pause();
 
         // 定时器停止
-        m_timer->stop();
+        p->m_timer->stop();
         ui->PostWidget->stop();
     }
     else
@@ -379,9 +520,9 @@ void Widget::handlePlaySlot()
         QIcon suspendIcon(":/img/suspend.png");
         ui->playerBtn->setIcon(suspendIcon);
 
-        m_player->play();
+        p->m_player->play();
 
-        m_timer->start();
+        p->m_timer->start();
         ui->PostWidget->start();
     }
 }
@@ -406,65 +547,126 @@ void Widget::loadAppointMusicDir(const QString& filepath)
     }
 }
 
-// 播放指定的歌曲
-void Widget::playAppointMusic(const QString& filepath)
+void Widget::loadLocalPlayList()
 {
-    // 暂不使用此参数
-    Q_UNUSED(filepath);
-
-    QString musicName = ui->musicList->currentItem()->text();
-    // 歌曲名
-    ui->songName->setText(musicName);
-    // 专辑照片
-    QString albumPath = m_musicPath + musicName + ".jpg";
-    QPixmap albumPix(albumPath);
-    if(albumPix.isNull())
+    QFile file(tempPath + "playlist.json"); // 打开 文件
+    if (!file.open(QIODevice::ReadOnly))
     {
-        albumPath = m_musicPath + musicName + ".png";
-        albumPix = QPixmap(albumPath);
+        qDebug() << "无法打开播放列表文件！";
+        return;
     }
-    ui->albumPic->setPixmap(albumPix.scaled(ui->albumPic->width(),ui->albumPic->height()));
-    ui->PostWidget->SetPixmap(albumPix);
-    // 歌曲
-    QString absoluteName = m_musicPath + musicName + ".mp3";
-    m_player->setMedia(QUrl::fromLocalFile(absoluteName));
 
-    // 歌词
-    QString lyricPath = m_musicPath + musicName + ".lrc";
-    // 加载歌词
-    loadAppointLyric(lyricPath);
+    QByteArray fileContent = file.readAll(); // 读取文件内容
+    file.close();
+//    qDebug()<<QString(fileContent);
+    parseMusicList(fileContent,p->map_playList,"playlist");
+    displayMusicListForPlaylist(bubble,p->map_playList);
+}
 
-    handlePlaySlot();
-    m_player->play();
+// 播放指定的歌曲
+void Widget::playAppointMusic(QListWidgetItem *item)
+{
+    // 处理音频数据
+//    QString location = "D:\\File\\Documents\\QtProjects\\MusicPlayer\\singleTest\\streamPlayTest\\temp\\";
+//    QString musicid = ui->musicList->currentItem()->data(Qt::UserRole).toString();
+    QString location = tempPath + "music\\";
+    QString musicid = item->data(Qt::UserRole).toString();
+
+    if(!QFile::exists(location + musicid + ".mp3") && IsRequestMusicReceived == true)
+    {
+        qDebug() << "没有这首歌，开始请求";
+        // 创建一个 JSON 对象
+        QJsonObject jsonObject;
+        jsonObject["type"] = "DOWNLOAD_MUSIC";
+        jsonObject["musicid"] = musicid;
+
+        requestedMusicId = musicid;
+        IsRequestMusicReceived = false;
+
+        sendJsonToServer(jsonObject);
+    }
+    if(!QFile::exists(location + musicid + ".lrc") && IsRequestLyricReceived == true)
+    {
+        qDebug() << "没有歌词，开始请求";
+        // 创建一个 JSON 对象
+        QJsonObject jsonObject;
+        jsonObject["type"] = "DOWNLOAD_LYRIC";
+        jsonObject["musicid"] = musicid;
+
+        requestedLyricId = musicid;
+        qDebug()<<requestedLyricId;
+        IsRequestLyricReceived = false;
+
+        sendJsonToServer(jsonObject);
+    }
+    if(!QFile::exists(location + musicid + ".png") && IsRequestCoverReceived == true)
+    {
+        qDebug() << "没有封面，开始请求";
+        // 创建一个 JSON 对象
+        QJsonObject jsonObject;
+        jsonObject["type"] = "DOWNLOAD_COVER";
+        jsonObject["musicid"] = musicid;
+
+        requestedCoverId = musicid;
+        qDebug()<<requestedCoverId;
+        IsRequestCoverReceived = false;
+
+        sendJsonToServer(jsonObject);
+    }
+
+    if(IsRequestMusicReceived == true)
+    {
+        p->m_player->setMedia(QUrl::fromLocalFile(location + musicid + ".mp3"));
+        handlePlaySlot();
+        p->m_player->play();
+        QString musicName = bubble->currentItem()->text();
+        // 歌曲名
+        ui->songName->setText(musicName);
+    }
+    if(IsRequestLyricReceived == true)
+    {
+        QString lyricPath = location + musicid + ".lrc";
+        // 加载歌词
+        loadAppointLyric(lyricPath);
+    }
+    if(IsRequestCoverReceived == true)
+    {
+        QString albumPath = location + musicid + ".png";
+        QPixmap albumPix(albumPath);
+        ui->albumPic->setPixmap(albumPix.scaled(ui->albumPic->width(),ui->albumPic->height()));
+        ui->PostWidget->SetPixmap(albumPix);
+    }
 }
 
 void Widget::handleNextSlot()
 {
-    int currentRow = ui->musicList->currentRow();
+//    int currentRow = ui->musicList->currentRow();
+    int currentRow = bubble->currentRow();
     int nextRow = 0;
 
-    if(m_playMode == ORDER_PLAY | m_playMode == CIRCLE_PLAY)
+    if(p->m_playMode == ORDER_PLAY | p->m_playMode == CIRCLE_PLAY)
     {
-        nextRow = (currentRow + 1) % ui->musicList->count();
+        nextRow = (currentRow + 1) % bubble->count();
     }
-    else if(m_playMode == RANDOM_PLAY)
+    else if(p->m_playMode == RANDOM_PLAY)
     {
         do
         {
-            nextRow = qrand() % ui->musicList->count();
+            nextRow = qrand() % bubble->count();
         } while(currentRow == nextRow);
     }
-    ui->musicList->setCurrentRow(nextRow);
-    playAppointMusic();
+//    ui->musicList->setCurrentRow(nextRow);
+    bubble->setCurrentRow(nextRow);
+    playAppointMusic(bubble->currentItem());
 }
 
 // 播放模式切换
 void Widget::handleModeSlot()
 {
     // 播放模式
-    m_playMode = (m_playMode + 1)% MAXNUM_PLAY;
+    p->m_playMode = (p->m_playMode + 1)% MAXNUM_PLAY;
 
-    switch(m_playMode)
+    switch(p->m_playMode)
     {
         case ORDER_PLAY:
         {
@@ -489,8 +691,10 @@ void Widget::handleModeSlot()
 
 Widget::~Widget()
 {
-    delete m_player;
+    delete p->m_player;
+    delete p->m_timer;
     delete p;
+    delete bubble;
     delete ui;
 }
 
@@ -499,4 +703,70 @@ void Widget::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     // 将背景图绘制到整个窗口
     painter.drawImage(0, 0, p->image);
+}
+
+void Widget::parseMusicList(const QString &jsonStr, QMap<QString, SongInfo> &songMap, const QString &listName)
+{
+    qDebug()<<"开始解析json歌单";
+//    qDebug()<<jsonStr;
+    QJsonDocument doc = QJsonDocument::fromJson(jsonStr.toUtf8());
+    QJsonObject jsonObj = doc.object();
+    QJsonObject musicList = jsonObj["musiclist"].toObject();
+    QJsonArray hotlist = musicList[listName].toArray();
+
+    // 解析 hotlist 数组中的每个歌曲
+    for (const QJsonValue &value : hotlist)
+    {
+        QJsonObject songObj = value.toObject();
+
+        SongInfo song;
+        song.id = songObj["id"].toString();
+        song.title = songObj["title"].toString();
+        song.artist = songObj["artist"].toString();
+        song.album = songObj["album"].toString();
+
+        // 将歌曲信息插入到 QMap 中
+        songMap.insert(song.id, song);
+        qDebug()<<song.id<<"  "<<song.title;
+    }
+}
+
+void Widget::displayMusicList(QListWidget *listWidget, const QMap<QString, SongInfo> &songMap)
+{
+    qDebug()<<"开始载入列表";
+    listWidget->clear();  // 清空现有内容
+
+    // 遍历 QMap，添加每首歌的名称和歌手到 QListWidget 中
+    for (auto it = songMap.begin(); it != songMap.end(); ++it)
+    {
+        const SongInfo &song = it.value();
+
+        // 创建 QListWidgetItem，并设置 text 和 data
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setText(song.title + " - " + song.artist);  // 设置显示内容为 歌名 - 歌手
+        item->setData(Qt::UserRole, song.id);  // 设置 data 为歌曲的 ID
+
+        // 将 item 添加到 listWidget
+        listWidget->addItem(item);
+    }
+}
+
+void Widget::displayMusicListForPlaylist(bubblePlayList* list, const QMap<QString, SongInfo> &songMap)
+{
+    qDebug()<<"开始载入列表";
+    list->clear();  // 清空现有内容
+
+    // 遍历 QMap，添加每首歌的名称和歌手到 QListWidget 中
+    for (auto it = songMap.begin(); it != songMap.end(); ++it)
+    {
+        const SongInfo &song = it.value();
+
+        // 创建 QListWidgetItem，并设置 text 和 data
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setText(song.title + " - " + song.artist);  // 设置显示内容为 歌名 - 歌手
+        item->setData(Qt::UserRole, song.id);  // 设置 data 为歌曲的 ID
+
+        // 将 item 添加到 listWidget
+        list->addItem(item);
+    }
 }

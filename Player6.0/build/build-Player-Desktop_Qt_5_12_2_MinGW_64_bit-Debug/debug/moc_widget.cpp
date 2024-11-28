@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Widget_t {
-    QByteArrayData data[15];
-    char stringdata0[214];
+    QByteArrayData data[21];
+    char stringdata0[324];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -32,23 +32,32 @@ struct qt_meta_stringdata_Widget_t {
 static const qt_meta_stringdata_Widget_t qt_meta_stringdata_Widget = {
     {
 QT_MOC_LITERAL(0, 0, 6), // "Widget"
-QT_MOC_LITERAL(1, 7, 14), // "handlePrevSlot"
-QT_MOC_LITERAL(2, 22, 0), // ""
-QT_MOC_LITERAL(3, 23, 14), // "handlePlaySlot"
-QT_MOC_LITERAL(4, 38, 14), // "handleNextSlot"
-QT_MOC_LITERAL(5, 53, 14), // "handleModeSlot"
-QT_MOC_LITERAL(6, 68, 18), // "handleDurationSlot"
-QT_MOC_LITERAL(7, 87, 8), // "duration"
-QT_MOC_LITERAL(8, 96, 18), // "handlePositionSlot"
-QT_MOC_LITERAL(9, 115, 8), // "position"
-QT_MOC_LITERAL(10, 124, 17), // "handleTimeoutSlot"
-QT_MOC_LITERAL(11, 142, 21), // "handleDoubleClickList"
-QT_MOC_LITERAL(12, 164, 16), // "handlePlayFinish"
-QT_MOC_LITERAL(13, 181, 25), // "QMediaPlayer::MediaStatus"
-QT_MOC_LITERAL(14, 207, 6) // "status"
+QT_MOC_LITERAL(1, 7, 21), // "downloadSuccess_music"
+QT_MOC_LITERAL(2, 29, 0), // ""
+QT_MOC_LITERAL(3, 30, 21), // "downloadSuccess_lyric"
+QT_MOC_LITERAL(4, 52, 21), // "downloadSuccess_cover"
+QT_MOC_LITERAL(5, 74, 21), // "playListDoubleClicked"
+QT_MOC_LITERAL(6, 96, 16), // "QListWidgetItem*"
+QT_MOC_LITERAL(7, 113, 4), // "item"
+QT_MOC_LITERAL(8, 118, 14), // "handlePrevSlot"
+QT_MOC_LITERAL(9, 133, 14), // "handlePlaySlot"
+QT_MOC_LITERAL(10, 148, 14), // "handleNextSlot"
+QT_MOC_LITERAL(11, 163, 14), // "handleModeSlot"
+QT_MOC_LITERAL(12, 178, 18), // "handleDurationSlot"
+QT_MOC_LITERAL(13, 197, 8), // "duration"
+QT_MOC_LITERAL(14, 206, 18), // "handlePositionSlot"
+QT_MOC_LITERAL(15, 225, 8), // "position"
+QT_MOC_LITERAL(16, 234, 17), // "handleTimeoutSlot"
+QT_MOC_LITERAL(17, 252, 21), // "handleDoubleClickList"
+QT_MOC_LITERAL(18, 274, 16), // "handlePlayFinish"
+QT_MOC_LITERAL(19, 291, 25), // "QMediaPlayer::MediaStatus"
+QT_MOC_LITERAL(20, 317, 6) // "status"
 
     },
-    "Widget\0handlePrevSlot\0\0handlePlaySlot\0"
+    "Widget\0downloadSuccess_music\0\0"
+    "downloadSuccess_lyric\0downloadSuccess_cover\0"
+    "playListDoubleClicked\0QListWidgetItem*\0"
+    "item\0handlePrevSlot\0handlePlaySlot\0"
     "handleNextSlot\0handleModeSlot\0"
     "handleDurationSlot\0duration\0"
     "handlePositionSlot\0position\0"
@@ -64,34 +73,46 @@ static const uint qt_meta_data_Widget[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       4,       // signalCount
+
+ // signals: name, argc, parameters, tag, flags
+       1,    0,   79,    2, 0x06 /* Public */,
+       3,    0,   80,    2, 0x06 /* Public */,
+       4,    0,   81,    2, 0x06 /* Public */,
+       5,    1,   82,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   59,    2, 0x0a /* Public */,
-       3,    0,   60,    2, 0x0a /* Public */,
-       4,    0,   61,    2, 0x0a /* Public */,
-       5,    0,   62,    2, 0x0a /* Public */,
-       6,    1,   63,    2, 0x0a /* Public */,
-       8,    1,   66,    2, 0x0a /* Public */,
-      10,    0,   69,    2, 0x0a /* Public */,
-      11,    0,   70,    2, 0x0a /* Public */,
-      12,    1,   71,    2, 0x0a /* Public */,
+       8,    0,   85,    2, 0x0a /* Public */,
+       9,    0,   86,    2, 0x0a /* Public */,
+      10,    0,   87,    2, 0x0a /* Public */,
+      11,    0,   88,    2, 0x0a /* Public */,
+      12,    1,   89,    2, 0x0a /* Public */,
+      14,    1,   92,    2, 0x0a /* Public */,
+      16,    0,   95,    2, 0x0a /* Public */,
+      17,    0,   96,    2, 0x0a /* Public */,
+      18,    1,   97,    2, 0x0a /* Public */,
+
+ // signals: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 6,    7,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::LongLong,    7,
-    QMetaType::Void, QMetaType::LongLong,    9,
+    QMetaType::Void, QMetaType::LongLong,   13,
+    QMetaType::Void, QMetaType::LongLong,   15,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 13,   14,
+    QMetaType::Void, 0x80000000 | 19,   20,
 
        0        // eod
 };
@@ -102,27 +123,61 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         auto *_t = static_cast<Widget *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->handlePrevSlot(); break;
-        case 1: _t->handlePlaySlot(); break;
-        case 2: _t->handleNextSlot(); break;
-        case 3: _t->handleModeSlot(); break;
-        case 4: _t->handleDurationSlot((*reinterpret_cast< qint64(*)>(_a[1]))); break;
-        case 5: _t->handlePositionSlot((*reinterpret_cast< qint64(*)>(_a[1]))); break;
-        case 6: _t->handleTimeoutSlot(); break;
-        case 7: _t->handleDoubleClickList(); break;
-        case 8: _t->handlePlayFinish((*reinterpret_cast< QMediaPlayer::MediaStatus(*)>(_a[1]))); break;
+        case 0: _t->downloadSuccess_music(); break;
+        case 1: _t->downloadSuccess_lyric(); break;
+        case 2: _t->downloadSuccess_cover(); break;
+        case 3: _t->playListDoubleClicked((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
+        case 4: _t->handlePrevSlot(); break;
+        case 5: _t->handlePlaySlot(); break;
+        case 6: _t->handleNextSlot(); break;
+        case 7: _t->handleModeSlot(); break;
+        case 8: _t->handleDurationSlot((*reinterpret_cast< qint64(*)>(_a[1]))); break;
+        case 9: _t->handlePositionSlot((*reinterpret_cast< qint64(*)>(_a[1]))); break;
+        case 10: _t->handleTimeoutSlot(); break;
+        case 11: _t->handleDoubleClickList(); break;
+        case 12: _t->handlePlayFinish((*reinterpret_cast< QMediaPlayer::MediaStatus(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-        case 8:
+        case 12:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QMediaPlayer::MediaStatus >(); break;
             }
             break;
+        }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        {
+            using _t = void (Widget::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Widget::downloadSuccess_music)) {
+                *result = 0;
+                return;
+            }
+        }
+        {
+            using _t = void (Widget::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Widget::downloadSuccess_lyric)) {
+                *result = 1;
+                return;
+            }
+        }
+        {
+            using _t = void (Widget::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Widget::downloadSuccess_cover)) {
+                *result = 2;
+                return;
+            }
+        }
+        {
+            using _t = void (Widget::*)(QListWidgetItem * );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Widget::playListDoubleClicked)) {
+                *result = 3;
+                return;
+            }
         }
     }
 }
@@ -156,15 +211,40 @@ int Widget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 13;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 13)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 13;
     }
     return _id;
+}
+
+// SIGNAL 0
+void Widget::downloadSuccess_music()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+}
+
+// SIGNAL 1
+void Widget::downloadSuccess_lyric()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
+}
+
+// SIGNAL 2
+void Widget::downloadSuccess_cover()
+{
+    QMetaObject::activate(this, &staticMetaObject, 2, nullptr);
+}
+
+// SIGNAL 3
+void Widget::playListDoubleClicked(QListWidgetItem * _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 3, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

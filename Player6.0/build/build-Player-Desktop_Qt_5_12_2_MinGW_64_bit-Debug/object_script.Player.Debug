@@ -3,6 +3,7 @@ debug/rotatewidget.o
 debug/widget.o
 debug/loginsignup.o
 debug/bubbleplaylist.o
+debug/datahandler.o
 debug/qrc_resource.o
 debug/moc_rotatewidget.o
 debug/moc_widget.o

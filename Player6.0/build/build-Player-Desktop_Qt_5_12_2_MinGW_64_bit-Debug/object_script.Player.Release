@@ -3,6 +3,7 @@ release/rotatewidget.o
 release/widget.o
 release/loginsignup.o
 release/bubbleplaylist.o
+release/datahandler.o
 release/qrc_resource.o
 release/moc_rotatewidget.o
 release/moc_widget.o

@@ -220,7 +220,7 @@ QSlider::add-page:horizontal {
         <rect>
          <x>80</x>
          <y>20</y>
-         <width>180</width>
+         <width>350</width>
          <height>23</height>
         </rect>
        </property>

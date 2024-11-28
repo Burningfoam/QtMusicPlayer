@@ -7,6 +7,11 @@
 #include <QMap>
 #include <QTimer>
 #include <QPainter>
+#include <QListWidget>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include "bubbleplaylist.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -39,7 +44,30 @@ public:
     ~Widget();
 
     void paintEvent(QPaintEvent *event)override;
+    // 函数：解析 JSON 数据
+    void parseMusicList(const QString &jsonStr,QMap<QString, SongInfo>& songMap,const QString& listName);
+    void displayMusicList(QListWidget *listWidget,const QMap<QString, SongInfo>& songMap);
+    void displayMusicListForPlaylist(bubblePlayList* list,const QMap<QString, SongInfo>& songMap);
+public:
+    // 临时文件路径
+    QString tempPath;
 
+    QMap<QString, SongInfo> map_hotList;
+
+    QString requestedMusicId;
+    QString requestedLyricId;
+    QString requestedCoverId;
+    bool IsRequestMusicReceived;
+    bool IsRequestCoverReceived;
+    bool IsRequestLyricReceived;
+
+
+
+signals:
+    void downloadSuccess_music();  // 下载成功信号
+    void downloadSuccess_lyric();  // 下载成功信号
+    void downloadSuccess_cover();  // 下载成功信号
+    void playListDoubleClicked(QListWidgetItem *item);
 public slots:
     // 槽函数
     void handlePrevSlot();// 上一首按钮
@@ -54,13 +82,16 @@ public slots:
     void handleDoubleClickList();
     // 歌曲播放完毕
     void handlePlayFinish(QMediaPlayer::MediaStatus status);
+//    void handlePlayList(QListWidgetItem *item);
 private:
     // 初始化按钮图标
     void initButtonIcon();
     // 加载指定文件路径
     void loadAppointMusicDir(const QString& filepath);
+    // 加载本地播放列表
+    void loadLocalPlayList();
     // 播放指定的歌曲
-    void playAppointMusic(const QString& filepath = "");
+    void playAppointMusic(QListWidgetItem *item);
     // 格式化毫秒成 mm:ss
     QString formatMilliseconds(int milliseconds);
     // 加载歌词
@@ -69,29 +100,26 @@ private:
     int parseTime(const QString& time);
     // 刷新歌词(滚动歌词)
     void RefreshLyric();
+    // 向服务器发送json通用函数
+    void sendJsonToServer(const QJsonObject &jsonObj);
     // 左栏的信号与槽连接函数
     void leftBarConnect();
     void loginBarConnect();
     void playerBarConnect();
+    // 其他连接函数
     void mediaConnect();
+    void musicListConnect();
+    void downloadSuccessConnect();
+    void serverReceiveConnect();
+
 private:
     Ui::Widget *ui;
     WidgetPrivate* p;
-    QMediaPlayer* m_player;
 
-    // 播放的状态
-    bool m_playingState;
-    // 播放模式
-    int m_playMode;
+    bubblePlayList* bubble;// 播放列表气泡
     // 音乐路径
     QString m_musicPath;
 
-    // 歌词信息 <key:value> : <时间:歌词>
-    QMap<int, QString> m_lyricInfo;
-    QMap<int, QString>::iterator lastIter;
-
-    // 定时器
-    QTimer* m_timer;
 
 };
 

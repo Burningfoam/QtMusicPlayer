@@ -189,7 +189,7 @@ public:
         processBar->setOrientation(Qt::Horizontal);
         songName = new QLabel(widget_2);
         songName->setObjectName(QString::fromUtf8("songName"));
-        songName->setGeometry(QRect(80, 20, 180, 23));
+        songName->setGeometry(QRect(80, 20, 350, 23));
         QFont font1;
         font1.setFamily(QString::fromUtf8("Microsoft YaHei UI Light"));
         font1.setPointSize(10);

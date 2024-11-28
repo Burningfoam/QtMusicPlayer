@@ -13,13 +13,15 @@ SOURCES += \
     rotatewidget.cpp \
     widget.cpp \
     loginsignup.cpp \
-    bubbleplaylist.cpp
+    bubbleplaylist.cpp \
+    datahandler.cpp
 
 HEADERS += \
     rotatewidget.h \
     widget.h \
     loginsignup.h \
-    bubbleplaylist.h
+    bubbleplaylist.h \
+    datahandler.h
 
 FORMS += \
     rotatewidget.ui \

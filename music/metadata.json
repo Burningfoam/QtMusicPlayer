@@ -3,7 +3,7 @@
         {
             "album": "album_test",
             "artist": "artist_test",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/artist_test/album_test/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/artist_test/album_test/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/artist_test/album_test/发如雪.mp3",
             "id": "462729834",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/artist_test/album_test/发如雪.lrc",
@@ -12,7 +12,7 @@
         {
             "album": "album_test",
             "artist": "artist_test",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/artist_test/album_test/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/artist_test/album_test/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/artist_test/album_test/我落泪情绪零碎.mp3",
             "id": "1520512428",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/artist_test/album_test/我落泪情绪零碎.lrc",
@@ -21,7 +21,7 @@
         {
             "album": "11月的萧邦",
             "artist": "周杰伦",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/发如雪.mp3",
             "id": "2897961711",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/发如雪.lrc",
@@ -30,7 +30,7 @@
         {
             "album": "11月的萧邦",
             "artist": "周杰伦",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/夜曲.mp3",
             "id": "4198336932",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/夜曲.lrc",
@@ -39,7 +39,7 @@
         {
             "album": "11月的萧邦",
             "artist": "周杰伦",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/枫.mp3",
             "id": "3902090593",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/11月的萧邦/枫.lrc",
@@ -75,7 +75,7 @@
         {
             "album": "魔杰座",
             "artist": "周杰伦",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/兰亭序.mp3",
             "id": "4121442600",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/兰亭序.lrc",
@@ -84,7 +84,7 @@
         {
             "album": "魔杰座",
             "artist": "周杰伦",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/稻香.mp3",
             "id": "1875237388",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/稻香.lrc",
@@ -93,7 +93,7 @@
         {
             "album": "魔杰座",
             "artist": "周杰伦",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/花海.mp3",
             "id": "1912430644",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/周杰伦/魔杰座/花海.lrc",
@@ -147,7 +147,7 @@
         {
             "album": "平凡的一天",
             "artist": "毛不易",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/平凡的一天/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/平凡的一天/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/平凡的一天/像我这样的人.mp3",
             "id": "3038060749",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/平凡的一天/像我这样的人.lrc",
@@ -156,7 +156,7 @@
         {
             "album": "平凡的一天",
             "artist": "毛不易",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/平凡的一天/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/平凡的一天/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/平凡的一天/给你给我.mp3",
             "id": "972864246",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/毛不易/平凡的一天/给你给我.lrc",
@@ -165,7 +165,7 @@
         {
             "album": "年轮",
             "artist": "汪苏泷",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/汪苏泷/年轮/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/汪苏泷/年轮/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/汪苏泷/年轮/年轮.mp3",
             "id": "1032217405",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/汪苏泷/年轮/年轮.lrc",
@@ -174,7 +174,7 @@
         {
             "album": "自定义",
             "artist": "许嵩",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/内线.mp3",
             "id": "3069318873",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/内线.lrc",
@@ -183,7 +183,7 @@
         {
             "album": "自定义",
             "artist": "许嵩",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/城府.mp3",
             "id": "2881109901",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/城府.lrc",
@@ -192,7 +192,7 @@
         {
             "album": "自定义",
             "artist": "许嵩",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/多余的解释.mp3",
             "id": "2085495505",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/多余的解释.lrc",
@@ -201,7 +201,7 @@
         {
             "album": "自定义",
             "artist": "许嵩",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/如果当时.mp3",
             "id": "2616718620",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/如果当时.lrc",
@@ -210,7 +210,7 @@
         {
             "album": "自定义",
             "artist": "许嵩",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/星座书上.mp3",
             "id": "3655955339",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/星座书上.lrc",
@@ -219,7 +219,7 @@
         {
             "album": "自定义",
             "artist": "许嵩",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/有何不可.mp3",
             "id": "431352237",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/有何不可.lrc",
@@ -228,7 +228,7 @@
         {
             "album": "自定义",
             "artist": "许嵩",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/清明雨上.mp3",
             "id": "2775921610",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/清明雨上.lrc",
@@ -237,7 +237,7 @@
         {
             "album": "自定义",
             "artist": "许嵩",
-            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.jpg",
+            "cover_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/cover.png",
             "file_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/认错.mp3",
             "id": "535146868",
             "lyrics_path": "D:/File/Documents/QtProjects/MusicPlayer/music/artists/许嵩/自定义/认错.lrc",
