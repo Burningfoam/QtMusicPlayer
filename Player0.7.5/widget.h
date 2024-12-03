@@ -35,7 +35,12 @@ struct SongInfo
     QString artist;      // 艺术家
     QString album;       // 专辑
     QString id;          // 唯一标识符
+
+    QString coverPath;   // 封面图片路径
+    bool coverExists;
 };
+// 添加 Q_DECLARE_METATYPE
+Q_DECLARE_METATYPE(SongInfo)
 
 struct WidgetPrivate;
 class Widget : public QWidget

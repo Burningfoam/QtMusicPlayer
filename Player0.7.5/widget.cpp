@@ -17,10 +17,12 @@
 #include <QGraphicsOpacityEffect>
 #include <QThreadPool>
 #include <QMovie>
+#include <QStack>
 #include "datahandler.h"
 #include "songitemwidget.h"
 #include "homelistloadertask.h"
 #include "coverloaderrunnable.h"
+#include "loadmusiclistrunnable.h"
 #define BUFFER_SIZE 128
 
 struct WidgetPrivate
@@ -31,7 +33,11 @@ struct WidgetPrivate
 
     // 播放模式
     int m_playMode;
+    // 是否为首次启动
     bool isFirstPlayed;
+    // 用栈保存历史页面
+    QStack<int> pageHistory;
+    // 加载动画
     QMovie* loadingMovie;
     // 定时器
     QTimer* m_timer;
@@ -61,7 +67,7 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    p->socket.connectToHost("192.168.216.112",8080);
+    p->socket.connectToHost("192.168.0.157",8080);
     connect(&p->socket,&QTcpSocket::connected,[]()
     {
         qDebug()<<"连接服务器成功!"<<endl;
@@ -119,6 +125,7 @@ Widget::Widget(QWidget *parent) :
 
     // 打开时进入音乐播放界面
     ui->stackedWidget->setCurrentWidget(ui->page_music);
+    p->pageHistory.push(0);
     // 打开时播放列表第一首歌
     bubble->setCurrentRow(0);
     playAppointMusic();
@@ -267,12 +274,29 @@ void Widget::searchBarConnect()
 {
     connect(ui->toolButton_back,&QToolButton::clicked,[this]()
     {
-        if(ui->stackedWidget->currentWidget() == ui->page_list)
+        // 如果栈中有历史页面，返回上一页
+        if (p->pageHistory.size() > 1)
         {
-            if(ui->label_listTitle->text() == "我喜欢的音乐")
-                ui->stackedWidget->setCurrentWidget(ui->page_music);
-            else
-                ui->stackedWidget->setCurrentWidget(ui->page_home);
+            // 保证栈中至少有一个页面索引
+            p->pageHistory.pop();  // 弹出当前页面
+            int prevPageIndex = p->pageHistory.top();  // 获取上一页面的索引
+            ui->stackedWidget->setCurrentIndex(prevPageIndex);
+        }
+    });
+    connect(ui->stackedWidget,&QStackedWidget::currentChanged,[this](int index)
+    {
+        // 如果栈非空，记录上一个页面
+        if (!p->pageHistory.isEmpty())
+        {
+            int prevPageIndex = p->pageHistory.top();  // 获取上一个页面的索引
+            if (prevPageIndex != index)
+            {
+                p->pageHistory.push(index);  // 将当前页面的索引压入栈中
+            }
+        }
+        else
+        {
+            p->pageHistory.push(index);  // 第一次进入页面，直接压入
         }
     });
 }
@@ -911,85 +935,127 @@ void Widget::loadMusicList(const QString& userid,const QString& listname)
     ui->listWidget_list->clear();
     ui->label_listCover->setMovie(p->loadingMovie);
 
-    QString userId = userid;  // 假设你知道当前用户的 ID
-    if (!userProcess->db.isValid()) {
-        qDebug() << "Database is not valid.";
-    } else {
-        qDebug() << "Database is valid.";
-    }
-    if(userProcess->db.open())
-        qDebug()<<"打开数据库成功!\n";
-    else
-        qDebug()<<"打开数据库失败!\n"<<userProcess->db.lastError();
-    QSqlQuery query(userProcess->db);
+    // 创建 MusicListLoaderRunnable 实例
+    auto* loaderRunnable = new loadMusicListRunnable(userid, listname,tempPath);
 
-    // 获取用户名为 'user_likelist' 的歌单 ID
-    query.prepare("SELECT playlist_id FROM Playlist WHERE user_id = :userId AND playlist_name = :playlist_name");
-    query.bindValue(":userId", userId);
-    query.bindValue(":playlist_name", listname);
+    // 将 loaderRunnable 提交到线程池
+    QThreadPool::globalInstance()->start(loaderRunnable);
 
-    if (!query.exec() || !query.next())
+    // 连接加载完成的信号到主线程槽函数
+    connect(loaderRunnable, &loadMusicListRunnable::loadCompleted, this, [this](const QList<SongInfo>& songList)
     {
-        qDebug() << "没有找到该歌单："<<listname;
-        return;
-    }
-
-    int playlistId = query.value("playlist_id").toInt();  // 获取歌单 ID
-
-    // 查询 'user_likelist' 歌单中的歌曲
-    query.prepare("SELECT S.music_id, S.title, S.artist, S.album, S.coverPath "
-                  "FROM SongInfo S "
-                  "JOIN PlaylistSong PS ON S.music_id = PS.music_id "
-                  "WHERE PS.playlist_id = :playlistId");
-    query.bindValue(":playlistId", playlistId);
-
-    if (!query.exec())
-    {
-        qDebug() << "加载喜欢列表数据库查询失败" << query.lastError().text();
-        return;
-    }
-
-    int number = 1;
-    while (query.next())
-    {
-        int musicIdInt = query.value("music_id").toInt();
-        QString musicId = QString::asprintf("%010d", musicIdInt);
-
-        QString title = query.value("title").toString();
-        QString artist = query.value("artist").toString();
-        QString album = query.value("album").toString();
-        QString coverPath = query.value("coverPath").toString();
-
-        if(!QFile::exists(tempPath + "music\\" + musicId + ".png"))
+        int number = 1;
+        for (const SongInfo& song : songList)
         {
-            qDebug() << "歌单列表没有封面，开始请求";
-            QJsonObject jsonObject;
-            jsonObject["type"] = "DOWNLOAD_COVER";
-            jsonObject["downloadPath"] = coverPath;
-            downloadCoverQueue.enqueue(musicId);
-            sendJsonToServer(jsonObject);
+            // 创建 SongItemWidget 并设置歌曲详情
+            SongItemWidget* itemWidget = new SongItemWidget();
+            itemWidget->setSongDetails(song.title, song.artist, song.album);
+            itemWidget->setItemNumber(number);
+            itemWidget->setMusicId(song.id);
+
+            // 创建 QListWidgetItem 并将 SongItemWidget 插入到其中
+            QListWidgetItem* item = new QListWidgetItem(ui->listWidget_list);
+            item->setSizeHint(QSize(1125, 90));  // 设置固定大小
+            item->setData(Qt::UserRole, song.id);
+
+            // 将 SongItemWidget 添加到 QListWidgetItem
+            ui->listWidget_list->setItemWidget(item, itemWidget);
+
+            // 如果封面不存在，加入下载队列
+            if (!song.coverExists)
+            {
+                QJsonObject jsonObject;
+                jsonObject["type"] = "DOWNLOAD_COVER";
+                jsonObject["downloadPath"] = song.coverPath;
+                downloadCoverQueue.enqueue(song.id);
+                sendJsonToServer(jsonObject);
+            }
+            number++;
         }
 
-        qDebug() << "喜欢的歌：" << title;
+        p->currentFreshList = ui->listWidget_list;
+        p->timer_listCover->start();  // 启动封面加载定时器
+    });
 
-        // 创建 SongItemWidget 并设置歌曲详情
-        SongItemWidget* itemWidget = new SongItemWidget();
-        itemWidget->setSongDetails(title, artist, album);
-        itemWidget->setItemNumber(number);
-        itemWidget->setMusicId(musicId);
+//    QString userId = userid;  // 假设你知道当前用户的 ID
+//    if (!userProcess->db.isValid()) {
+//        qDebug() << "Database is not valid.";
+//    } else {
+//        qDebug() << "Database is valid.";
+//    }
+//    if(userProcess->db.open())
+//        qDebug()<<"打开数据库成功!\n";
+//    else
+//        qDebug()<<"打开数据库失败!\n"<<userProcess->db.lastError();
+//    QSqlQuery query(userProcess->db);
 
-        // 创建 QListWidgetItem 并将 SongItemWidget 插入到其中
-        QListWidgetItem* item = new QListWidgetItem(ui->listWidget_list);
-        item->setSizeHint(QSize(1125, 90));  // 设置固定大小
-        item->setData(Qt::UserRole, musicId);
+//    // 获取用户名为 'user_likelist' 的歌单 ID
+//    query.prepare("SELECT playlist_id FROM Playlist WHERE user_id = :userId AND playlist_name = :playlist_name");
+//    query.bindValue(":userId", userId);
+//    query.bindValue(":playlist_name", listname);
 
-        // 将 SongItemWidget 添加到 QListWidgetItem
-        ui->listWidget_list->setItemWidget(item, itemWidget);
-        number++;
-    }
+//    if (!query.exec() || !query.next())
+//    {
+//        qDebug() << "没有找到该歌单："<<listname;
+//        return;
+//    }
 
-    p->currentFreshList = ui->listWidget_list;
-    p->timer_listCover->start();
+//    int playlistId = query.value("playlist_id").toInt();  // 获取歌单 ID
+
+//    // 查询 'user_likelist' 歌单中的歌曲
+//    query.prepare("SELECT S.music_id, S.title, S.artist, S.album, S.coverPath "
+//                  "FROM SongInfo S "
+//                  "JOIN PlaylistSong PS ON S.music_id = PS.music_id "
+//                  "WHERE PS.playlist_id = :playlistId");
+//    query.bindValue(":playlistId", playlistId);
+
+//    if (!query.exec())
+//    {
+//        qDebug() << "加载喜欢列表数据库查询失败" << query.lastError().text();
+//        return;
+//    }
+
+//    int number = 1;
+//    while (query.next())
+//    {
+//        int musicIdInt = query.value("music_id").toInt();
+//        QString musicId = QString::asprintf("%010d", musicIdInt);
+
+//        QString title = query.value("title").toString();
+//        QString artist = query.value("artist").toString();
+//        QString album = query.value("album").toString();
+//        QString coverPath = query.value("coverPath").toString();
+
+//        if(!QFile::exists(tempPath + "music\\" + musicId + ".png"))
+//        {
+//            qDebug() << "歌单列表没有封面，开始请求";
+//            QJsonObject jsonObject;
+//            jsonObject["type"] = "DOWNLOAD_COVER";
+//            jsonObject["downloadPath"] = coverPath;
+//            downloadCoverQueue.enqueue(musicId);
+//            sendJsonToServer(jsonObject);
+//        }
+
+//        qDebug() << "喜欢的歌：" << title;
+
+//        // 创建 SongItemWidget 并设置歌曲详情
+//        SongItemWidget* itemWidget = new SongItemWidget();
+//        itemWidget->setSongDetails(title, artist, album);
+//        itemWidget->setItemNumber(number);
+//        itemWidget->setMusicId(musicId);
+
+//        // 创建 QListWidgetItem 并将 SongItemWidget 插入到其中
+//        QListWidgetItem* item = new QListWidgetItem(ui->listWidget_list);
+//        item->setSizeHint(QSize(1125, 90));  // 设置固定大小
+//        item->setData(Qt::UserRole, musicId);
+
+//        // 将 SongItemWidget 添加到 QListWidgetItem
+//        ui->listWidget_list->setItemWidget(item, itemWidget);
+//        number++;
+//    }
+
+//    p->currentFreshList = ui->listWidget_list;
+//    p->timer_listCover->start();
 }
 
 void Widget::showBigCover(QListWidget* list,QLabel* label)
@@ -1102,7 +1168,6 @@ void Widget::loadHomelistCover()
 {
     // 创建并提交任务到线程池
     HomelistLoaderTask *task = new HomelistLoaderTask;
-//    task->setAutoDelete(true);  // 任务完成后自动删除
     connect(task, &HomelistLoaderTask::coversLoaded,this,[this](const QList<QPixmap> &covers)
     {
         // 确保接收到封面列表后，更新UI

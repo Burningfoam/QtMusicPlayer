@@ -1,0 +1,37 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/last.png</file>
+        <file>img/next.png</file>
+        <file>img/play.png</file>
+        <file>img/random.png</file>
+        <file>img/sequence.png</file>
+        <file>img/single.png</file>
+        <file>img/suspend.png</file>
+        <file>img/sound.png</file>
+        <file>img/sequenceCycle.png</file>
+        <file>img/background_main.png</file>
+        <file>img/netease.png</file>
+        <file>img/icon_playlist.png</file>
+        <file>img/icon_silent.png</file>
+        <file>img/icon_volume.png</file>
+        <file>img/list_download.png</file>
+        <file>img/list_downloadClicked.png</file>
+        <file>img/list_local.png</file>
+        <file>img/list_localClicked.png</file>
+        <file>img/list_love.png</file>
+        <file>img/list_loveClicked.png</file>
+        <file>img/page_home.png</file>
+        <file>img/page_homeClicked.png</file>
+        <file>img/page_play.png</file>
+        <file>img/page_playClicked.png</file>
+        <file>img/setting.png</file>
+        <file>img/dislike.png</file>
+        <file>img/like.png</file>
+        <file>img/delete.png</file>
+        <file>img/loading.gif</file>
+        <file>img/back.png</file>
+        <file>img/search.png</file>
+        <file>img/folder.png</file>
+        <file>img/download.png</file>
+    </qresource>
+</RCC>

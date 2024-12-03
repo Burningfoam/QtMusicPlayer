@@ -9,6 +9,7 @@ HomelistLoaderTask::HomelistLoaderTask(QObject *parent)
 
 void HomelistLoaderTask::run()
 {
+    qDebug()<<"进入主页子线程！";
     // 每个子线程都使用独立的数据库连接
     QSqlDatabase db;
 
